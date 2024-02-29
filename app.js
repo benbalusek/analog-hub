@@ -13,6 +13,7 @@ const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -56,7 +57,21 @@ app.use(mongoSanitize());
 
 //////////////////////////////////////////////////////////////////////
 // Session configuration
+const store = MongoStore.create({
+  // mongoUrl: process.env.LOCAL_DB_URL, // local database
+  mongoUrl: process.env.ATLAS_DB_URL, // atlas database
+  touchAfter: 24 * 60 * 60,
+  crypto: {
+    secret: process.env.SESSION_SECRET,
+  },
+});
+
+store.on("error", function (e) {
+  console.log("session store error:", e);
+});
+
 const sessionConfig = {
+  store,
   name: "session",
   secret: process.env.SESSION_SECRET,
   resave: false,
