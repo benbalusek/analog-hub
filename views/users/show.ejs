@@ -1,0 +1,96 @@
+<% layout('/layouts/boilerplate') %>
+
+<!-- Modal -->
+<div class="modal fade" id="photoModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="row modal-content">
+      <!-- Photo Section -->
+      <div class="col-8 modal-body">
+        <div id="photoCarousel" class="carousel slide">
+          <div class="carousel-inner"></div>
+        </div>
+      </div>
+
+      <!-- Description  -->
+      <div class="col-4 card modal-body">
+        <div class="card-body">
+          <a class="title-link" href="">
+            <h5 class="card-title photo-title"></h5>
+          </a>
+          <h6 class="card-subtitle mb-2 text-muted photo-location"></h6>
+          <p class="card-text photo-description"></p>
+          <a href="" class="card-link author-link">
+            <h6 class="photo-author"></h6>
+          </a>
+          <!-- Like Button -->
+          <form class="like-form" action="" method="POST">
+            <button type="submit" class="btn btn-lg like-button">
+              <i class="fa-regular fa-heart like-count"></i>
+            </button>
+          </form>
+
+          <!-- Make a Comment  -->
+          <form action="" method="POST" class="mb-4 comment-form">
+            <div class="mb-3">
+              <textarea
+                class="form-control"
+                name="comment[text]"
+                id="comment"
+                cols="30"
+                rows="4"
+              ></textarea>
+            </div>
+            <button class="btn btn-success">Submit</button>
+          </form>
+
+          <!-- Comments Section  -->
+          <div class="comments-section"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h1><%=user.username%></h1>
+
+<!-- Masonry Grid -->
+<div class="grid">
+  <% for(let photo of photos) { %>
+  <div class="grid-item">
+    <img
+      src="<%= photo.images[0].url %>"
+      alt="<%= photo.title %>"
+      data-bs-toggle="modal"
+      data-bs-target="#photoModal"
+      data-bs-description="<%= photo.description %>"
+      data-bs-location="<%= photo.location %>"
+      data-bs-author="<%= photo.author.username %>"
+      data-bs-author-id="<%= photo.author._id %>"
+      data-bs-photo-id="<%= photo._id %>"
+      data-bs-like-count="<%= photo.likes.length %>"
+      data-bs-is-liked="<%= photo.isLikedByCurrentUser %>"
+      data-bs-comments-data="<%= photo.commentsData %>"
+      data-bs-images="<%= JSON.stringify(photo.images.map(image => ({ url: image.url }))) %>"
+    />
+  </div>
+  <% } %>
+</div>
+
+<!-- Pagination w/ infinite scroll  -->
+<% if (photos.length >= limit) { %>
+<nav class="pagination" role="navigation" aria-label="Pagination Navigation">
+  <a class="pagination__next" href="/<%= user._id %>?page=<%= page + 1 %>"></a>
+</nav>
+<% } %>
+
+<!-- currentUser  -->
+<% if(currentUser) { %>
+<script>
+  const currentUser = <%- JSON.stringify(currentUser) %>
+</script>
+<% } %>
+<!-- Masonry, Infinite Scroll, and Modal -->
+<script src="/javascripts/modalScript.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+<script src="https://unpkg.com/infinite-scroll@4/dist/infinite-scroll.pkgd.min.js"></script>
+<script src="javascripts/infiniteScroll.js"></script>

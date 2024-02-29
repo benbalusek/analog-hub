@@ -1,0 +1,177 @@
+<% layout('/layouts/boilerplate') %>
+
+<!-- Modal -->
+<div class="modal fade" id="photoModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div id="photoCarousel" class="carousel slide">
+          <div class="carousel-inner" data-bs-dismiss="modal">
+            <% photo.images.forEach((img, i) => { %>
+            <div class="carousel-item <%= i === 0 ? 'active' : ''%>">
+              <div class="image-wrapper">
+                <img
+                  src="<%= img.url %>"
+                  class="d-block w-100 img-fluid max-height-img"
+                  id="fullScreenImageShow"
+                  alt="..."
+                />
+              </div>
+            </div>
+            <% }) %>
+          </div>
+          <% if(photo.images.length > 1) { %>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#photoCarousel"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#photoCarousel"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Photo  -->
+<div class="row">
+  <div class="col-6">
+    <div class="mb-3">
+      <a
+        href="#"
+        class="d-block w-100 max-height-img"
+        data-bs-toggle="modal"
+        data-bs-target="#photoModal"
+        data-bs-img-src="<%= photo.images[0].url %>"
+      >
+        <img
+          src="<%= photo.images[0].url %>"
+          class="d-block w-100 img-fluid max-height-img"
+          alt="Full Screen Image"
+        />
+      </a>
+
+      <!-- Like Button  -->
+      <form class="like-form" action="/photos/<%=photo._id%>" method="POST">
+        <button
+          type="submit"
+          class="btn btn-lg like-button"
+          data-photo-id="<%= photo._id %>"
+        >
+          <% if(photo.isLikedByCurrentUser){ %>
+          <i id="heart" class="fa-solid fa-heart"> <%= photo.likes.length %></i>
+          <% }else{ %>
+          <i id="heart" class="fa-regular fa-heart">
+            <%= photo.likes.length %></i
+          >
+          <% } %>
+        </button>
+      </form>
+
+      <!-- Make a Comment  -->
+      <form
+        action="/photos/<%=photo._id%>/comments"
+        method="POST"
+        class="mb-4 validated-form"
+        novalidate
+      >
+        <div class="mb-3">
+          <textarea
+            class="form-control"
+            name="comment[text]"
+            id="comment"
+            cols="30"
+            rows="4"
+            required
+          ></textarea>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+        <button class="btn btn-success">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-6">
+    <!-- Map Box -->
+    <div class="mb-3" id="show-map"></div>
+
+    <!-- Photo Description  -->
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title"><%=photo.title%></h5>
+        <p class="card-subtitle"><%=photo.description%></p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item text-muted"><%=photo.location%></li>
+        <li class="list-group-item">
+          by
+          <a class="text-muted" href="/<%=photo.author._id%>"
+            ><%=photo.author.username%></a
+          >
+        </li>
+      </ul>
+      <% if(currentUser && photo.author.equals(currentUser._id)) { %>
+      <div class="card-body">
+        <a href="/photos/<%=photo._id%>/edit" class="card-link btn btn-info"
+          >Edit</a
+        >
+        <form
+          class="d-inline"
+          action="/photos/<%=photo._id%>?_method=DELETE"
+          method="POST"
+        >
+          <button class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+      <% } %>
+      <div class="card-footer text-muted"><%=date%> <%=edit%></div>
+    </div>
+
+    <!-- Comments and Info -->
+    <% for (let comment of photo.comments) { %>
+    <div class="card mb-3">
+      <div class="card-body">
+        <p><%= comment.text %></p>
+        <a href="/<%=comment.authorId%>">
+          <h6 class="card-subtitle mb-2 text-muted">-<%=comment.author%></h6>
+        </a>
+        <% if(currentUser && comment.authorId.equals(currentUser._id)) { %>
+        <form
+          action="/photos/<%=photo._id%>/comments/<%=comment._id%>?_method=DELETE"
+          method="POST"
+        >
+          <button class="btn btn-sm btn-danger">Delete</button>
+          <% } %>
+        </form>
+      </div>
+    </div>
+    <% } %>
+  </div>
+</div>
+
+<!-- Javascripts -->
+<% if(currentUser) { %>
+<script>
+  const currentUser = <%- JSON.stringify(currentUser) %>;
+</script>
+<% } %>
+<script>
+  const mapToken = "<%-process.env.MAPBOX_TOKEN%>";
+  const photo = <%- JSON.stringify(photo) %>;
+  const photos = {features: <%- JSON.stringify(photos) %>};
+</script>
+<script src="/javascripts/mapShow.js"></script>
+<script src="/javascripts/likeButtonScript.js"></script>

@@ -1,0 +1,75 @@
+<% layout('/layouts/boilerplate') %>
+
+<!-- New Form  -->
+<div class="row">
+  <h1 class="text-center">New Photo</h1>
+  <div class="col-lg-6 offset-lg-3">
+    <form
+      action="/photos"
+      method="POST"
+      class="validated-form"
+      enctype="multipart/form-data"
+      novalidate
+    >
+      <!-- Images  -->
+      <div class="mb-3">
+        <label for="image" class="form-label">Images</label>
+        <input
+          class="form-control"
+          type="file"
+          id="image"
+          name="image"
+          accept="image/*"
+          multiple
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+
+      <!-- Title  -->
+      <div class="mb-3">
+        <label class="form-label" for="title">Title</label>
+        <input
+          class="form-control"
+          type="text"
+          id="title"
+          name="photo[title]"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+
+      <!-- Description  -->
+      <div class="mb-3">
+        <label class="form-label" for="description">Description</label>
+        <textarea
+          rows="7"
+          class="form-control"
+          type="text"
+          id="description"
+          name="photo[description]"
+          required
+        ></textarea>
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+
+      <!-- Location  -->
+      <div class="mb-3">
+        <label class="form-label" for="location">Location</label>
+        <input
+          class="form-control"
+          type="text"
+          id="location"
+          name="photo[location]"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+
+      <!-- Button  -->
+      <div class="mb-3">
+        <button class="btn btn-success">Upload Photo</button>
+      </div>
+    </form>
+  </div>
+</div>

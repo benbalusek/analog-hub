@@ -1,0 +1,65 @@
+<% layout('/layouts/boilerplate') %>
+
+<!-- Edit Form  -->
+<div class="row">
+  <h1 class="text-center">Edit Photo</h1>
+  <div class="col-lg-6 offset-lg-3">
+    <form
+      action="/photos/<%=photo._id%>?_method=PUT"
+      method="POST"
+      class="validated-form"
+      enctype="multipart/form-data"
+      novalidate
+    >
+      <!-- Title  -->
+      <div class="mb-3">
+        <label class="form-label" for="title">Title</label>
+        <input
+          class="form-control"
+          type="text"
+          id="title"
+          name="photo[title]"
+          value="<%=photo.title%>"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+
+      <!-- Description  -->
+      <div class="mb-3">
+        <label class="form-label" for="description">Description</label>
+        <textarea
+          rows="7"
+          class="form-control"
+          type="text"
+          id="description"
+          name="photo[description]"
+          required
+        >
+<%=photo.description%></textarea
+        >
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+
+      <!-- Location  -->
+      <div class="mb-3">
+        <label class="form-label" for="location">Location</label>
+        <input
+          class="form-control"
+          type="text"
+          id="location"
+          name="photo[location]"
+          value="<%=photo.location%>"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+
+      <!-- Button  -->
+      <div class="mb-3">
+        <button class="btn btn-info">Update Photo</button>
+      </div>
+    </form>
+    <a href="/photos/<%=photo._id%>">Cancel</a>
+  </div>
+</div>
