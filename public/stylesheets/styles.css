@@ -103,7 +103,7 @@
   }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 200px) {
   .grid-item {
     width: calc(100% - 20px);
   }
