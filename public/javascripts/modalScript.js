@@ -55,9 +55,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const modalLikeForm = document.querySelector(".like-form");
     modalLikeForm.setAttribute("data-photo-id", photoId);
-
-    updateComments(commentsData);
-    const imagesData = JSON.parse(img.getAttribute("data-bs-images"));
+    if (commentsData) {
+      updateComments(commentsData);
+    }
+    let imagesData = [];
+    try {
+      imagesData = JSON.parse(img.getAttribute("data-bs-images"));
+    } catch (error) {
+      console.error("Parsing error in imagesData:", error);
+    }
     updateCarousel(imagesData);
   }
 

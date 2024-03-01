@@ -20,8 +20,19 @@
   background-color: transparent;
 }
 
+@media (max-width: 992px) {
+  .modal-content {
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 992px) {
+  .modal-content {
+    overflow-x: hidden;
+  }
+}
 .modal-body.card {
-  margin: 15px 10px 20px 0;
   opacity: 0.9;
 }
 
@@ -42,32 +53,6 @@
 .image-wrapper {
   display: inline-block;
   border: 4px solid white;
-}
-
-/* Photo Gallery */
-@media (max-width: 1000px) {
-  .gallery-container .gallery {
-    columns: 2 !important;
-  }
-}
-
-.gallery-container .gallery {
-  columns: 3;
-  gap: 30px;
-}
-
-.gallery-container .gallery img {
-  width: 100%;
-}
-
-.gallery-item {
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  height: 100%;
-  width: 100%;
-  padding: 0;
-  margin: 0 0 10px 0;
 }
 
 /* Maps */
@@ -101,12 +86,6 @@
 }
 
 /* Masonry  */
-@media (max-width: 900px) {
-  .grid-item {
-    width: calc(50% - 20px);
-  }
-}
-
 .grid-item {
   width: calc(33.333% - 20px);
   margin-bottom: 20px;
@@ -116,4 +95,16 @@
   width: 100%;
   display: block;
   cursor: pointer;
+}
+
+@media (max-width: 800px) {
+  .grid-item {
+    width: calc(50% - 20px);
+  }
+}
+
+@media (max-width: 400px) {
+  .grid-item {
+    width: calc(100% - 20px);
+  }
 }

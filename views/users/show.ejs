@@ -3,48 +3,50 @@
 <!-- Modal -->
 <div class="modal fade" id="photoModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-fullscreen">
-    <div class="row modal-content">
-      <!-- Photo Section -->
-      <div class="col-8 modal-body">
-        <div id="photoCarousel" class="carousel slide">
-          <div class="carousel-inner"></div>
+    <div class="modal-content">
+      <div class="row">
+        <!-- Photo Section -->
+        <div class="col-md-8 col-12 modal-body">
+          <div id="photoCarousel" class="carousel slide">
+            <div class="carousel-inner"></div>
+          </div>
         </div>
-      </div>
 
-      <!-- Description  -->
-      <div class="col-4 card modal-body">
-        <div class="card-body">
-          <a class="title-link" href="">
-            <h5 class="card-title photo-title"></h5>
-          </a>
-          <h6 class="card-subtitle mb-2 text-muted photo-location"></h6>
-          <p class="card-text photo-description"></p>
-          <a href="" class="card-link author-link">
-            <h6 class="photo-author"></h6>
-          </a>
-          <!-- Like Button -->
-          <form class="like-form" action="" method="POST">
-            <button type="submit" class="btn btn-lg like-button">
-              <i class="fa-regular fa-heart like-count"></i>
-            </button>
-          </form>
+        <!-- Description  -->
+        <div class="col-md-4 col-12 card modal-body">
+          <div class="card-body">
+            <a class="title-link" href="">
+              <h5 class="card-title photo-title"></h5>
+            </a>
+            <h6 class="card-subtitle mb-2 text-muted photo-location"></h6>
+            <p class="card-text photo-description"></p>
+            <a href="" class="card-link author-link">
+              <h6 class="photo-author"></h6>
+            </a>
+            <!-- Like Button -->
+            <form class="like-form" action="" method="POST">
+              <button type="submit" class="btn btn-lg like-button">
+                <i class="fa-regular fa-heart like-count"></i>
+              </button>
+            </form>
 
-          <!-- Make a Comment  -->
-          <form action="" method="POST" class="mb-4 comment-form">
-            <div class="mb-3">
-              <textarea
-                class="form-control"
-                name="comment[text]"
-                id="comment"
-                cols="30"
-                rows="4"
-              ></textarea>
-            </div>
-            <button class="btn btn-success">Submit</button>
-          </form>
+            <!-- Make a Comment  -->
+            <form action="" method="POST" class="mb-4 comment-form">
+              <div class="mb-3">
+                <textarea
+                  class="form-control"
+                  name="comment[text]"
+                  id="comment"
+                  cols="30"
+                  rows="4"
+                ></textarea>
+              </div>
+              <button class="btn btn-success">Submit</button>
+            </form>
 
-          <!-- Comments Section  -->
-          <div class="comments-section"></div>
+            <!-- Comments Section  -->
+            <div class="comments-section"></div>
+          </div>
         </div>
       </div>
     </div>
